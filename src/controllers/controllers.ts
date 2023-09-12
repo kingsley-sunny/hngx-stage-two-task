@@ -8,12 +8,11 @@ export class PersonController {
   async create(req: Request<any, { name: string }>, res: Response, next: NextFunction) {
     try {
       const { name } = req.body;
-      console.log("🚀 ~~ file: controllers.ts:9 ~~ PersonController ~~ create ~~ name:", name);
 
       const existingPerson = await PersonModel.query().findOne({ name });
 
       if (existingPerson) {
-        next(ApiResponse.makeErrorResponse("Name already exists"));
+        return next(ApiResponse.makeErrorResponse("Name already exists"));
       }
 
       const person = await PersonModel.query().insertAndFetch({ name, id: randomUUID() });
@@ -70,7 +69,14 @@ export class PersonController {
       }
 
       if (!person) {
-        next(ApiResponse.makeErrorResponse("This person does not exist"));
+        return next(ApiResponse.makeErrorResponse("This person does not exist"));
+      }
+
+      // if the name already exist
+      const anotherPerson = await PersonModel.query().findOne({ name });
+
+      if (anotherPerson) {
+        return next(ApiResponse.makeErrorResponse("This person already exists"));
       }
 
       person = await PersonModel.query().patchAndFetchById((person as any).id, { name: name });
@@ -83,7 +89,6 @@ export class PersonController {
 
   async delete(req: Request<{ id: string }, any>, res: Response, next: NextFunction) {
     try {
-      const { name } = req.body;
       const { id } = req.params;
 
       let person: PersonModel | undefined;
