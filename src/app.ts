@@ -1,5 +1,6 @@
 import bodyParser from "body-parser";
 import cors from "cors";
+import { config } from "dotenv";
 import express, { NextFunction, Request, Response } from "express";
 import Knex from "knex";
 import { Model } from "objection";
@@ -13,6 +14,8 @@ const knex = Knex(knexConfig.development);
 
 // use enable CORS for all request
 app.use(cors());
+
+config();
 
 app.use(bodyParser.json());
 
@@ -41,4 +44,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 // connects the database
 Model.knex(knex);
 
-app.listen(8080);
+app.listen(process.env.PORT, () => {
+  console.log("listening on port");
+});
