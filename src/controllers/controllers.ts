@@ -83,15 +83,24 @@ export class PersonController {
 
   async delete(req: Request<{ id: string }, any>, res: Response, next: NextFunction) {
     try {
+      const { name } = req.body;
       const { id } = req.params;
 
-      const person = await PersonModel.query().findOne("id", "=", id).orWhere("name", "=", id);
+      let person: PersonModel | undefined;
+
+      if (checkIfValidUUID(id)) {
+        person = await PersonModel.query().findOne({ id });
+      } else {
+        person = await PersonModel.query().findOne("name", "=", id);
+      }
 
       if (!person) {
         return next(ApiResponse.makeErrorResponse("This person does not exists"));
       }
 
-      res.status(200).json(ApiResponse.makeSuccessResponse(person, "Successfully deleted Person"));
+      const deleted = await PersonModel.query().deleteById((person as any).id);
+
+      res.status(200).json(ApiResponse.makeSuccessResponse(deleted, "Successfully deleted Person"));
     } catch (error: any) {
       next(ApiResponse.makeErrorResponse(error.message));
     }

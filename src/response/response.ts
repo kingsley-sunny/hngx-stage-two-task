@@ -3,11 +3,7 @@ export class ApiResponse {
     return { statusCode: statusCode, message, success: false };
   }
 
-  static makeSuccessResponse(
-    data: Record<any, any>,
-    message: string = "Successful",
-    statusCode = 200
-  ) {
+  static makeSuccessResponse(data: any, message: string = "Successful", statusCode = 200) {
     return {
       data,
       success: true,

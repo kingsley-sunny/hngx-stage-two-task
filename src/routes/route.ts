@@ -12,4 +12,4 @@ router.get("/:id", personController.findOne);
 
 router.put("/:id", personController.update);
 
-router.delete("/", personController.delete);
+router.delete("/:id", personController.delete);
