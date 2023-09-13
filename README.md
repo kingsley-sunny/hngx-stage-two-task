@@ -17,13 +17,11 @@ Install the dependencies:
 yarn
 ```
 
-
 Running locally:
 
 ```bash
-npm start
+yarn start
 ```
-
 
 ## Documentation
 
