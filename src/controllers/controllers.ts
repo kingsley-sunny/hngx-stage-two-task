@@ -17,7 +17,9 @@ export class PersonController {
 
       const person = await PersonModel.query().insertAndFetch({ name, id: randomUUID() });
 
-      res.status(201).json(ApiResponse.makeSuccessResponse(person, "Successfully Created Person"));
+      res
+        .status(201)
+        .json(ApiResponse.makeSuccessResponse(person, "Successfully Created Person", 201));
     } catch (error: any) {
       next(ApiResponse.makeErrorResponse(error.message));
     }
@@ -81,7 +83,7 @@ export class PersonController {
 
       person = await PersonModel.query().patchAndFetchById((person as any).id, { name: name });
 
-      res.status(201).json(ApiResponse.makeSuccessResponse(person, "Successfully Updated Person"));
+      res.json(ApiResponse.makeSuccessResponse(person, "Successfully Updated Person"));
     } catch (error: any) {
       next(ApiResponse.makeErrorResponse(error.message));
     }
