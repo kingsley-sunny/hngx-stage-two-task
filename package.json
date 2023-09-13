@@ -5,10 +5,11 @@
   "main": "src/app.ts",
   "repository": "https://github.com/kingsley-sunny/hngx-stage-two-task.git",
   "author": "kingsley-sunny",
-  "type": "module",
+  "type": "commonjs",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon src/app.ts"
+    "build": "tsc",
+    "start": "nodemon ./build/src/app.js"
   },
   "dependencies": {
     "@types/cors": "^2.8.14",
