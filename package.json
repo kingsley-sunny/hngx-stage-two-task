@@ -5,6 +5,7 @@
   "main": "src/app.ts",
   "repository": "https://github.com/kingsley-sunny/hngx-stage-two-task.git",
   "author": "kingsley-sunny",
+  "type": "module",
   "license": "MIT",
   "scripts": {
     "start": "nodemon src/app.ts"
