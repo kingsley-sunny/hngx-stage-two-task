@@ -9,7 +9,8 @@
   "license": "MIT",
   "scripts": {
     "build": "npx tsc",
-    "start": "nodemon ./build/src/app.js"
+    "start": "nodemon ./build/src/app.js",
+    "mg:up": "knex migrate:up"
   },
   "dependencies": {
     "@types/cors": "^2.8.14",
